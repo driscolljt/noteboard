@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
+const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
 
@@ -10,6 +11,18 @@ app.engine('handlebars', exphbs({
     defaultLayout: 'main'
   }));
   app.set('view engine', 'handlebars');
+
+// DB Config
+const db = require('./config/database');
+
+// Map global promise - get rid of warning
+mongoose.Promise = global.Promise;
+// Connect to mongoose
+mongoose.connect(db.mongoURI, {
+  useMongoClient: true
+})
+  .then(() => console.log('MongoDB Connected...'))
+  .catch(err => console.log(err));
 
 // Static folder
 app.use(express.static(path.join(__dirname, 'public')));
