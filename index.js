@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
   });
 
 
+// set host port, for debugging this app will be using 5009
 const port = process.env.PORT || 5009;
 
 app.listen(port, () =>{
